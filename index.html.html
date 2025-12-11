@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>技术进阶所需球员及资源</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a2a6c, #2a4c7d, #3d6cb9);
+            color: #fff;
+            min-height: 100vh;
+            padding: 20px;
+            padding-top: 80px;
+        }
+        
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+        }
+        
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding: 0 10px;
+        }
+        
+        h1 {
+            font-size: 1.8rem;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        }
+        
+        .search-btn {
+            background: #ffcc00;
+            color: #1a2a6c;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+            position: fixed;
+            top: 15px;
+            right: 15px;
+            z-index: 100;
+        }
+        
+        .search-btn:hover {
+            transform: scale(1.1);
+            background: #ffdd44;
+        }
+        
+        .search-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 99;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            padding: 20px;
+        }
+        
+        .search-box {
+            width: 90%;
+            max-width: 500px;
+            margin-bottom: 30px;
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: 15px 20px;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            border: none;
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .close-search {
+            background: #ff5252;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .close-search:hover {
+            background: #ff6b6b;
+        }
+        
+        .player-category {
+            margin-bottom: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+        
+        .category-header {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .category-icon {
+            font-size: 1.8rem;
+            margin-right: 15px;
+            color: #ffcc00;
+        }
+        
+        .category-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .requirements-list {
+            padding: 0;
+        }
+        
+        .requirement-item {
+            padding: 15px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .requirement-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .requirement-item:last-child {
+            border-bottom: none;
+        }
+        
+        .requirement-stage {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #ffcc00;
+            margin-bottom: 5px;
+        }
+        
+        .requirement-resources {
+            font-size: 0.9rem;
+            color: #aac8ff;
+            margin-bottom: 8px;
+        }
+        
+        .players-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .player-card {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 8px 10px;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .player-card:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-3px);
+        }
+        
+        .key-effect {
+            font-size: 0.85rem;
+            color: #77dd77;
+            margin-top: 5px;
+            font-style: italic;
+        }
+        
+        .highlight {
+            background: rgba(255, 204, 0, 0.3) !important;
+            box-shadow: 0 0 0 2px #ffcc00;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        @media (max-width: 768px) {
+            .players-grid {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            }
+        }
+        
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.5rem;
+            }
+            
+            .category-title {
+                font-size: 1.3rem;
+            }
+            
+            .players-grid {
+                grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>技术进阶所需球员及资源</h1>
+        </header>
+        
+        <button class="search-btn" id="searchBtn">
+            <i class="fas fa-search"></i>
+        </button>
+        
+        <div class="search-container" id="searchContainer">
+            <div class="search-box">
+                <input type="text" class="search-input" id="searchInput" placeholder="输入球员名字进行搜索...">
+            </div>
+            <button class="close-search" id="closeSearch">关闭搜索</button>
+        </div>
+        
+        <!-- 前锋 -->
+        <div class="player-category">
+            <div class="category-header">
+                <div class="category-icon">
+                    <i class="fas fa-futbol"></i>
+                </div>
+                <div class="category-title">前锋</div>
+            </div>
+            <ul class="requirements-list" id="forward">
+                <li class="requirement-item">
+                    <div class="requirement-stage">SL-I → s+</div>
+                    <div class="requirement-resources">50凭证+60专项计划+60特训卡</div>
+                    <div class="players-grid">
+                        <div class="player-card">孙兴慜</div>
+                        <div class="player-card">萨拉赫</div>
+                        <div class="player-card">凯恩</div>
+                        <div class="player-card">哈兰德</div>
+                    </div>
+                </li>
+                <li class="requirement-item">
+                    <div class="requirement-stage">I-II → s+</div>
+                    <div class="requirement-resources">50凭证+60专项计划+60特训卡</div>
+                    <div class="key-effect">等级上限115</div>
+                    <div class="players-grid">
+                        <div class="player-card">阿扎尔</div>
+                        <div class="player-card">苏亚雷斯</div>
+                        <div class="player-card">本泽马</div>
+                        <div class="player-card">瓦尔迪</div>
+                    </div>
+                </li>
+                <li class="requirement-item">
+                    <div class="requirement-stage">II-III → s+</div>
+                    <div class="requirement-resources">80凭证+90专项计划+90特训卡</div>
+                    <div class="players-grid">
+                        <div class="player-card">姆巴佩</div>
+                        <div class="player-card">莱万多夫斯基</div>
+                        <div class="player-card">格里兹曼</div>
+                    </div>
+                </li>
+                <li class="requirement-item">
+                    <div class="requirement-stage">III-IV → 3阶SL</div>
+                    <div class="requirement-resources">120凭证+150专项计划+350特训卡</div>
+                    <div class="key-effect">培养上限提11</div>
+                    <div class="players-grid">
+                        <div class="player-card">马赫雷斯</div>
+                        <div class="player-card">奥巴梅扬</div>
+                        <div class="player-card">伊瓜因</div>
+                        <div class="player-card">桑切斯</div>
+                    </div>
+                </li>
+                <li class="requirement-item">
+                    <div class="requirement-stage">IV-V → 2阶SL</div>
+                    <div class="requirement-resources">200凭证+350专项计划+350特训卡</div>
+                    <div class="key-effect">训练上限VII</div>
+                    <div class="players-grid">
+                        <div class="player-card">马丁内利</div>
+                        <div class="player-card">本泽马</div>
+                        <div class="player-card">马内</div>
+                        <div class="player-card">贝尔</div>
+                    </div>
+                </li>
+                <li class="requirement-item">
+                    <div class="requirement-stage">V-VI → 1阶SL</div>
+                    <div class="requirement-resources">300凭证+500专项计划+500特训卡</div>
+                    <div class="key-effect">等级上限130</div>
+                    <div class="players-grid">
+                        <div class="player-card">托雷斯</div>
+                        <div class="player-card">范佩西</div>
+                        <div class="player-card">鲁尼</div>
+                        <div class="player-card">劳塔罗</div>
+                    </div>
+                </li>
+                <li class="requirement-item">
+                    <div class="requirement-stage">Ⅵ-Ⅶ</div>
+                    <div class="requirement-resources">500凭证+500专项计划+500特训卡</div>
+                    <div class="key-effect">冠军印记+1</div>
+                </li>
+            </ul>
+        </div>
+        
+        <!-- 中场 -->
+        <div class="player-category">
+            <div class="category-header">
+                <div class="category-icon">
+                    <i class="fas fa-people-arrows"></i>
+                </div>
+                <div class="category-title">中场</div>
+            </div>
+            <ul class="requirements-list" id="midfield">
+                <li class="requirement-item">
+                    <div class="requirement-stage">SL-I → s+</div>
+                    <div class="requirement-resources">50凭证+60专项计划+60特训卡</div>
+                    <div class="players-grid">
+                        <div class="player-card">莫德里奇</div>
+                        <div class="player-card">穆勒</div>
+                        <div class="player-card">博格巴</div>
+                        <div class="player-card">埃里克森</div>
+                    </div>
+                </li>
+                <li class="requirement-item">
+                    <div class="requirement-stage">I-II → s+</div>
+                    <div class="requirement-resources">50凭证+60专项计划+60特训卡</div>
+                    <div class="key-effect">等级上限115</div>
+                    <div class="players-grid">
+                        <div class="player-card">B费</div>
+                        <div class="player-card">布斯克茨</div>
+                        <div class="player-card">罗伊斯</div>
+                        <div class="player-card">克罗斯</div>
+                    </div>
+                </li>
+                <li class="requirement-item">
+                    <div class="requirement-stage">II-III → s+</div>
+                    <div class="requirement-resources">80凭证+90专项计划+90特训卡</div>
+                    <div class="players-grid">
+                        <div class="player-card">德布劳内</div>
+                        <div class="player-card">基米希</div>
+                        <div class="player-card">坎特</div>
+                        <div class="player-card">伊涅斯塔</div>
+                    </div>
+                </li>
+                <li class="requirement-item">
+                    <div class="requirement-stage">III-IV → 3阶SL</div>
+                    <div class="requirement-resources">120凭证+150专项计划+350特训卡</div>
+                    <div class="key-effect">培养上限提11</div>
+                    <div class="players-grid">
+                        <div class="player-card">大卫席瓦</div>
+                        <div class="player-card">拉基蒂奇</div>
+                        <div class="player-card">比达尔</div>
+                        <div class="player-card">马塔</div>
+                    </div>
+                </li>
+                <li class="requirement-item">
+                    <div class="requirement-stage">IV-V → 2阶SL</div>
+                    <div class="requirement-resources">200凭证+350专项计划+350特训卡</div>
+                    <div class="key-effect">训练上限VII</div>
+                    <div class="players-grid">
+                        <div class="player-card">卡塞米罗</div>
+                        <div class="player-card">格雷茨卡</div>
+                        <div class="player-card">京多安</div>
+                        <div class="player-card">法币尼奥</div>
+                    </div>
+                </li>
+                <li class="requirement-item">
+                    <div class="requirement-stage">V-VI → 1阶SL</div>
+                    <div class="requirement-resources">300凭证+500专项计划+500特训卡</div>
+                    <div class="key-effect">等级上限130</div>
+                    <div class="players-grid">
+                        <div class="player-card">赖斯</div>
+                        <div class="player-card">巴拉克</div>
+                        <div class="player-card">坎特</div>
+                        <div class="player-card">卡卡</div>
+                    </div>
+                </li>
+                <li class="requirement-item">
+                    <div class="requirement-stage">Ⅵ-Ⅶ</div>
+                    <div class="requirement-resources">500凭证+500专项计划+500特训卡</div>
+                    <div class="key-effect">冠军印记+1</div>
+                </li>
+            </ul>
+        </div>
+        
+        <!-- 后卫 -->
+        <div class="player-category">
+            <div class="category-header">
+                <div class="category-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <div class="category-title">后卫</div>
+            </div>
+            <ul class="requirements-list" id="defender">
+                <li class="requirement-item">
+                    <div class="requirement-stage">SL-I → s+</div>
+                    <div class="requirement-resources">50凭证+60专项计划+60特训卡</div>
+                    <div class="players-grid">
+                        <div class="player-card">蒂亚戈·席尔瓦</div>
+                        <div class="player-card">基耶利尼</div>
+                        <div class="player-card">鲁本·迪亚斯</div>
+                        <div class="player-card">范戴克</div>
+                    </div>
+                </li>
+                <li class="requirement-item">
+                    <div class="requirement-stage">I-II → s+</div>
+                    <div class="requirement-resources">50凭证+60专项计划+60特训卡</div>
+                    <div class="key-effect">等级上限115</div>
+                    <div class="players-grid">
+                        <div class="player-card">皮克</div>
+                        <div class="player-card">瓦拉内</div>
+                        <div class="player-card">胡梅尔斯</div>
+                        <div class="player-card">拉莫斯</div>
+                    </div>
+                </li>
+                <li class="requirement-item">
+                    <div class="requirement-stage">II-III → s+</div>
+                    <div class="requirement-resources">80凭证+90专项计划+90特训卡</div>
+                    <div class="players-grid">
+                        <div class="player-card">阿诺德</div>
+                        <div class="player-card">坎塞洛</div>
+                        <div class="player-card">罗伯逊</div>
+                        <div class="player-card">普约尔</div>
+                    </div>
+                </li>
+                <li class="requirement-item">
+                    <div class="requirement-stage">III-IV → 3阶SL</div>
+                    <div class="requirement-resources">120凭证+150专项计划+350特训卡</div>
+                    <div class="key-effect">培养上限提11</div>
+                    <div class="players-grid">
+                        <div class="player-card">博阿滕</div>
+                        <div class="player-card">马斯切拉诺</div>
+                        <div class="player-card">加里·卡希尔</div>
+                        <div class="player-card">佩佩</div>
+                    </div>
+                </li>
+                <li class="requirement-item">
+                    <div class="requirement-stage">IV-V → 2阶SL</div>
+                    <div class="requirement-resources">200凭证+350专项计划+350特训卡</div>
+                    <div class="key-effect">训练上限VII</div>
+                    <div class="players-grid">
+                        <div class="player-card">皮克</div>
+                        <div class="player-card">阿尔巴</div>
+                        <div class="player-card">卡瓦哈尔</div>
+                        <div class="player-card">博努奇</div>
+                    </div>
+                </li>
+                <li class="requirement-item">
+                    <div class="requirement-stage">V-VI → 1阶SL</div>
+                    <div class="requirement-resources">300凭证+500专项计划+500特训卡</div>
+                    <div class="key-effect">等级上限130</div>
+                    <div class="players-grid">
+                        <div class="player-card">阿拉巴</div>
+                        <div class="player-card">坎贝尔</div>
+                        <div class="player-card">马特拉齐</div>
+                        <div class="player-card">萨利巴</div>
+                    </div>
+                </li>
+                <li class="requirement-item">
+                    <div class="requirement-stage">Ⅵ-Ⅶ</div>
+                    <div class="requirement-resources">500凭证+500专项计划+500特训卡</div>
+                    <div class="key-effect">冠军印记+1</div>
+                </li>
+            </ul>
+        </div>
+        
+        <!-- 门将 -->
+        <div class="player-category">
+            <div class="category-header">
+                <div class="category-icon">
+                    <i class="fas fa-hand-paper"></i>
+                </div>
+                <div class="category-title">门将</div>
+            </div>
+            <ul class="requirements-list" id="goalkeeper">
+                <li class="requirement-item">
+                    <div class="requirement-stage">SL-I → s+</div>
+                    <div class="requirement-resources">50凭证+60专项计划+60特训卡</div>
+                    <div class="players-grid">
+                        <div class="player-card">特尔斯特根</div>
+                        <div class="player-card">多纳鲁马</div>
+                        <div class="player-card">奥布拉克</div>
+                    </div>
+                </li>
+                <li class="requirement-item">
+                    <div class="requirement-stage">I-II → s+</div>
+                    <div class="requirement-resources">50凭证+60专项计划+60特训卡</div>
+                    <div class="key-effect">等级上限115</div>
+                    <div class="players-grid">
+                        <div class="player-card">阿利松</div>
+                        <div class="player-card">德赫亚</div>
+                        <div class="player-card">库尔图瓦</div>
+                        <div class="player-card">埃德森</div>
+                    </div>
+                </li>
+                <li class="requirement-item">
+                    <div class="requirement-stage">II-III → s+</div>
+                    <div class="requirement-resources">80凭证+90专项计划+90特训卡</div>
+                    <div class="players-grid">
+                        <div class="player-card">阿利松</div>
+                        <div class="player-card">德赫亚</div>
+                        <div class="player-card">库尔图瓦</div>
+                        <div class="player-card">埃德森</div>
+                    </div>
+                </li>
+                <li class="requirement-item">
+                    <div class="requirement-stage">III-IV → 3阶SL</div>
+                    <div class="requirement-resources">120凭证+150专项计划+350特训卡</div>
+                    <div class="key-effect">培养上限提11</div>
+                    <div class="players-grid">
+                        <div class="player-card">乔·哈特</div>
+                        <div class="player-card">洛里</div>
+                        <div class="player-card">小舒梅切尔</div>
+                        <div class="player-card">迈尼昂</div>
+                    </div>
+                </li>
+                <li class="requirement-item">
+                    <div class="requirement-stage">IV-V → 2阶SL</div>
+                    <div class="requirement-resources">200凭证+350专项计划+350特训卡</div>
+                    <div class="key-effect">训练上限VII</div>
+                    <div class="players-grid">
+                        <div class="player-card">埃德森</div>
+                        <div class="player-card">阿利松</div>
+                        <div class="player-card">德赫亚</div>
+                        <div class="player-card">奥布拉克</div>
+                    </div>
+                </li>
+                <li class="requirement-item">
+                    <div class="requirement-stage">V-VI → 1阶SL</div>
+                    <div class="requirement-resources">300凭证+500专项计划+500特训卡</div>
+                    <div class="key-effect">等级上限130</div>
+                    <div class="players-grid">
+                        <div class="player-card">布冯</div>
+                        <div class="player-card">诺伊尔</div>
+                        <div class="player-card">特尔斯特根</div>
+                        <div class="player-card">E·马丁内斯</div>
+                        <div class="player-card">多纳鲁马</div>
+                    </div>
+                </li>
+                <li class="requirement-item">
+                    <div class="requirement-stage">Ⅵ-Ⅶ</div>
+                    <div class="requirement-resources">500凭证+500专项计划+500特训卡</div>
+                    <div class="key-effect">冠军印记+1</div>
+                </li>
+            </ul>
+        </div>
+        
+        <footer>
+            <p>技术进阶所需球员及资源查询系统 © 2023</p>
+        </footer>
+    </div>
+    
+    <script>
+        // 搜索功能
+        document.getElementById('searchBtn').addEventListener('click', function() {
+            document.getElementById('searchContainer').style.display = 'flex';
+            document.getElementById('searchInput').focus();
+        });
+        
+        document.getElementById('closeSearch').addEventListener('click', function() {
+            document.getElementById('searchContainer').style.display = 'none';
+            // 清除高亮
+            clearHighlights();
+        });
+        
+        // 搜索功能
+        document.getElementById('searchInput').addEventListener('input', function() {
+            const searchTerm = this.value.trim().toLowerCase();
+            clearHighlights();
+            
+            if (searchTerm.length > 0) {
+                const playerCards = document.querySelectorAll('.player-card');
+                playerCards.forEach(card => {
+                    if (card.textContent.toLowerCase().includes(searchTerm)) {
+                        card.classList.add('highlight');
+                        // 滚动到高亮元素
+                        card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+                });
+            }
+        });
+        
+        function clearHighlights() {
+            const highlightedCards = document.querySelectorAll('.player-card.highlight');
+            highlightedCards.forEach(card => {
+                card.classList.remove('highlight');
+            });
+        }
+        
+        // 点击球员卡片也可以触发搜索
+        document.querySelectorAll('.player-card').forEach(card => {
+            card.addEventListener('click', function() {
+                document.getElementById('searchInput').value = this.textContent;
+                document.getElementById('searchInput').dispatchEvent(new Event('input'));
+            });
+        });
+    </script>
+</body>
+</html>
